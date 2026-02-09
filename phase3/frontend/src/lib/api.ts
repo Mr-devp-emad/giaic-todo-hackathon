@@ -1,6 +1,6 @@
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:8000';
 
-const getAuthHeader = () => {
+const getAuthHeader = (): Record<string, string> => {
   if (typeof document === 'undefined') return {};
   const token = document.cookie
     .split('; ')
