@@ -1,0 +1,26 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: kafka-pubsub
+  namespace: default
+spec:
+  type: pubsub.kafka
+  version: v1
+  metadata:
+  - name: brokers
+    value: "todo-kafka-kafka-bootstrap.kafka.svc.cluster.local:9092"
+  - name: consumerGroup
+    value: "todo-app"
+  - name: clientId
+    value: "todo-app-client"
+  - name: authType
+    value: "none"
+  - name: maxMessageBytes
+    value: "1024000"
+  - name: consumeRetryInterval
+    value: "200ms"
+scopes:
+- backend
+- recurring-processor
+- notification-processor
+- audit-processor

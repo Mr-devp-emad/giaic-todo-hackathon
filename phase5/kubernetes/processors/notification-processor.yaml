@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-processor
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-processor
+  template:
+    metadata:
+      labels:
+        app: notification-processor
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "notification-processor"
+        dapr.io/app-port: "8002"
+        dapr.io/log-level: "info"
+    spec:
+      containers:
+      - name: notification-processor
+        image: backend:latest  # Will be updated to ACR image
+        command: ["python", "processors/notification_processor.py"]
+        ports:
+        - containerPort: 8002
+        env:
+        - name: PORT
+          value: "8002"
+        - name: DAPR_HTTP_PORT
+          value: "3500"
+        - name: DAPR_GRPC_PORT
+          value: "50001"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-processor
+  namespace: default
+spec:
+  selector:
+    app: notification-processor
+  ports:
+  - port: 8002
+    targetPort: 8002
+  type: ClusterIP

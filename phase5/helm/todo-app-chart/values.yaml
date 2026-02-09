@@ -1,0 +1,37 @@
+# Default values for todo-app-chart.
+
+namespace: todo-app
+
+frontend:
+  replicaCount: 2
+  image:
+    repository: todo-frontend
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 3000
+    targetPort: 3000
+
+backend:
+  replicaCount: 2
+  image:
+    repository: todo-backend
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 8000
+    targetPort: 8000
+  secrets:
+    googleApiKey: "replace-with-your-key"
+    databaseUrl: "replace-with-your-db-url"
+    betterAuthSecret: "replace-with-your-secret"
+    secretKey: "replace-with-your-secret-key"
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  host: todo.local

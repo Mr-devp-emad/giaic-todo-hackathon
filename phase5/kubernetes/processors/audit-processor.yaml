@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: audit-processor
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: audit-processor
+  template:
+    metadata:
+      labels:
+        app: audit-processor
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "audit-processor"
+        dapr.io/app-port: "8003"
+        dapr.io/log-level: "info"
+    spec:
+      containers:
+      - name: audit-processor
+        image: backend:latest  # Will be updated to ACR image
+        command: ["python", "processors/audit_processor.py"]
+        ports:
+        - containerPort: 8003
+        env:
+        - name: PORT
+          value: "8003"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: connectionString
+        - name: DAPR_HTTP_PORT
+          value: "3500"
+        - name: DAPR_GRPC_PORT
+          value: "50001"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: audit-processor
+  namespace: default
+spec:
+  selector:
+    app: audit-processor
+  ports:
+  - port: 8003
+    targetPort: 8003
+  type: ClusterIP
