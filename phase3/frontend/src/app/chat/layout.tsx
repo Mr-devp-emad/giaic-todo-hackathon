@@ -1,7 +1,7 @@
 "use client";
 
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/landing/dashboard/app-slider";
+import { AppSidebar } from "@/components/landing/dashboard/app-sidebar";
 import { Toaster } from "react-hot-toast";
 
 export default function ChatLayout({
