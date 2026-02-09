@@ -27,8 +27,8 @@ import {
 import api from '@/lib/api';
 import toast from 'react-hot-toast';
 import { Mail, Lock, ArrowRight, Sparkles } from 'lucide-react';
-import { Navbar } from '@/components/landing/navbar';
-import { Footer } from '@/components/landing/footer';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 
 const loginSchema = z.object({
     email: z.string().email('Please enter a valid email address'),
@@ -92,7 +92,7 @@ export default function LoginPage() {
 
     return (
         <div className="relative flex min-h-screen flex-col bg-background py-10">
-            <Navbar />
+            <Header />
 
             <main className="relative flex-1 flex flex-col items-center justify-center pt-32 pb-24 px-6 overflow-hidden">
                 {/* Background effects matching homepage Hero */}
@@ -129,7 +129,7 @@ export default function LoginPage() {
                                     <FormField
                                         control={form.control}
                                         name="email"
-                                        render={({ field }: { field: any }) => (
+                                        render={({ field }) => (
                                             <FormItem className="space-y-3">
                                                 <FormLabel className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Email Address</FormLabel>
                                                 <FormControl>
@@ -150,7 +150,7 @@ export default function LoginPage() {
                                     <FormField
                                         control={form.control}
                                         name="password"
-                                        render={({ field }: { field: any }) => (
+                                        render={({ field }) => (
                                             <FormItem className="space-y-3">
                                                 <div className="flex items-center justify-between">
                                                     <FormLabel className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Password</FormLabel>

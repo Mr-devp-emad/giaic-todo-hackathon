@@ -1,12 +1,12 @@
-# Todo App - Phase 2
+# Todo App - Phase 4: Kubernetes Deployment
 
-A full-stack todo application with user authentication and task management.
+A full-stack todo application with user authentication and task management, now containerized and deployed on Kubernetes.
 
 ## Tech Stack
 
-- **Frontend**: Next.js 16, TypeScript, Tailwind CSS, Better Auth, Framer Motion
+- **Frontend**: Next.js 16, TypeScript, Tailwind CSS, Better Auth
 - **Backend**: FastAPI, SQLModel, PostgreSQL (Neon)
-- **Database**: Neon Serverless PostgreSQL
+- **Infrastructure**: Docker, Kubernetes, Helm
 - **Authentication**: Better Auth with JWT
 
 ## Features
@@ -101,3 +101,28 @@ All endpoints require authentication via `Authorization: Bearer <token>` header.
 ## License
 
 MIT
+
+## Phase 4: Kubernetes Deployment
+
+This project is now fully containerized and ready for Kubernetes deployment.
+
+### Quick Deployment
+
+Run the automated workflow script to build images and deploy to your local cluster (minikube/Docker Desktop):
+
+```bash
+./deployment-workflow.sh
+```
+
+### Detailed Documentation
+
+For step-by-step setup, troubleshooting, and manual deployment instructions, please refer to:
+
+- [DEPLOYMENT-GUIDE.md](./DEPLOYMENT-GUIDE.md)
+
+### Deployment Artifacts
+
+- **Dockerfiles**: `frontend/Dockerfile`, `backend/Dockerfile`
+- **Kubernetes Manifests**: `kubernetes/base/`
+- **Helm Chart**: `helm/todo-app-chart/`
+- **Specifications**: `specs/phase4/`

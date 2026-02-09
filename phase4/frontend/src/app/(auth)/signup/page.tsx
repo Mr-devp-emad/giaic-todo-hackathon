@@ -27,8 +27,8 @@ import {
 import api from '@/lib/api';
 import toast from 'react-hot-toast';
 import { Mail, Lock, User, ArrowRight, CheckCircle2 } from 'lucide-react';
-import { Navbar } from '@/components/landing/navbar';
-import { Footer } from '@/components/landing/footer';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 
 const signupSchema = z.object({
     username: z.string().min(2, 'Username must be at least 2 characters'),
@@ -96,7 +96,7 @@ export default function SignupPage() {
 
     return (
         <div className="relative flex min-h-screen flex-col bg-background py-10">
-            <Navbar />
+            <Header />
 
             <main className="relative flex-1 flex flex-col items-center justify-center pt-32 pb-24 px-6 overflow-hidden">
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
@@ -132,7 +132,7 @@ export default function SignupPage() {
                                     <FormField
                                         control={form.control}
                                         name="username"
-                                        render={({ field }: { field: any }) => (
+                                        render={({ field }) => (
                                             <FormItem className="space-y-3">
                                                 <FormLabel className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Display Name</FormLabel>
                                                 <FormControl>
@@ -152,7 +152,7 @@ export default function SignupPage() {
                                     <FormField
                                         control={form.control}
                                         name="email"
-                                        render={({ field }: { field: any }) => (
+                                        render={({ field }) => (
                                             <FormItem className="space-y-3">
                                                 <FormLabel className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Email Address</FormLabel>
                                                 <FormControl>
@@ -173,7 +173,7 @@ export default function SignupPage() {
                                     <FormField
                                         control={form.control}
                                         name="password"
-                                        render={({ field }: { field: any }) => (
+                                        render={({ field }) => (
                                             <FormItem className="space-y-3">
                                                 <FormLabel className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Secret Password</FormLabel>
                                                 <FormControl>

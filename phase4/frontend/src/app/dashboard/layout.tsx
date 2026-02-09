@@ -1,7 +1,6 @@
 "use client";
 
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/landing/dashboard/app-slider";
+import { DashboardSidebar } from "@/components/DashboardSidebar";
 
 export default function DashboardLayout({
     children,
@@ -9,13 +8,14 @@ export default function DashboardLayout({
     children: React.ReactNode;
 }) {
     return (
-        <SidebarProvider defaultOpen>
-            <div className="flex min-h-screen bg-background text-foreground overflow-hidden w-full">
-                <AppSidebar />
-                <main className="flex-1 overflow-hidden">
-                    {children}
-                </main>
+        <div className="flex min-h-screen bg-background text-foreground overflow-hidden">
+            {/* Sidebar - Fixed width on Desktop */}
+            <DashboardSidebar />
+
+            {/* Main Content Area */}
+            <div className="flex-1 transition-all duration-300 ease-in-out md:ml-64">
+                {children}
             </div>
-        </SidebarProvider>
+        </div>
     );
 }

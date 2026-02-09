@@ -1,7 +1,6 @@
 "use client";
 
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/landing/dashboard/app-slider";
+import { DashboardSidebar } from "@/components/DashboardSidebar";
 import { Toaster } from "react-hot-toast";
 
 export default function ChatLayout({
@@ -10,14 +9,15 @@ export default function ChatLayout({
     children: React.ReactNode;
 }) {
     return (
-        <SidebarProvider defaultOpen>
-            <div className="flex min-h-screen bg-background text-foreground overflow-hidden w-full">
-                <Toaster position="top-right" />
-                <AppSidebar />
-                <main className="flex-1 overflow-hidden">
-                    {children}
-                </main>
+        <div className="flex min-h-screen bg-background text-foreground overflow-hidden">
+            <Toaster position="top-right" />
+            {/* Sidebar - Fixed width on Desktop */}
+            <DashboardSidebar />
+
+            {/* Main Content Area */}
+            <div className="flex-1 transition-all duration-300 ease-in-out md:ml-64">
+                {children}
             </div>
-        </SidebarProvider>
+        </div>
     );
 }

@@ -1,50 +1,31 @@
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:8000';
+import axios from 'axios';
 
-export const api = {
-  async getTasks() {
-    const response = await fetch(`${BASE_URL}/api/tasks`);
-    if (!response.ok) throw new Error('Failed to fetch tasks');
-    return response.json();
+const api = axios.create({
+  baseURL: "/api",
+  headers: {
+    'Content-Type': 'application/json',
   },
-  
-  async get(url: string) {
-    const response = await fetch(`${BASE_URL}/api${url}`);
-    if (!response.ok) throw new Error(`GET ${url} failed`);
-    const result = await response.json();
-    return { data: result };
-  },
+  withCredentials: true,
+});
 
-  async post(url: string, data: any) {
-    const response = await fetch(`${BASE_URL}/api${url}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) throw new Error(`POST ${url} failed`);
-    const result = await response.json();
-    return { data: result };
-  },
+api.interceptors.request.use(
+  (config) => {
+    // Helper to get cookie by name
+    const getCookie = (name: string) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop()?.split(';').shift();
+    };
 
-  async patch(url: string, data: any) {
-    const response = await fetch(`${BASE_URL}/api${url}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) throw new Error(`PATCH ${url} failed`);
-    const result = await response.json();
-    return { data: result };
+    const token = getCookie('auth_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
   },
-
-  async delete(url: string) {
-    const response = await fetch(`${BASE_URL}/api${url}`, {
-      method: 'DELETE',
-    });
-    if (!response.ok) throw new Error(`DELETE ${url} failed`);
-    if (response.status === 204) return { data: null };
-    const result = await response.json();
-    return { data: result };
+  (error) => {
+    return Promise.reject(error);
   }
-};
+);
 
 export default api;

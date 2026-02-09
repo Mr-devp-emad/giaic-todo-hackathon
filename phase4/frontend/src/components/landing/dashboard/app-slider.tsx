@@ -5,6 +5,7 @@ import {
   CheckCircle2,
   FolderKanban,
   Users,
+  MessageSquare,
   Settings,
   ChevronDown,
   Plus,
@@ -34,19 +35,21 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { currentUser, projects } from '@/lib/mock-data'
+import Link from 'next/link'
 
 const mainNavItems = [
-  { icon: Inbox, label: 'Inbox', badge: 3 },
-  { icon: CheckCircle2, label: 'My Tasks', badge: null },
-  { icon: FolderKanban, label: 'Projects', badge: null },
-  { icon: Users, label: 'Team', badge: null },
+  { icon: Inbox, label: 'Inbox', badge: 3, href: '/dashboard' },
+  { icon: CheckCircle2, label: 'My Tasks', badge: null, href: '/dashboard' },
+  { icon: MessageSquare, label: 'Chat AI', badge: 'New', href: '/chat' },
+  { icon: FolderKanban, label: 'Projects', badge: null, href: '#' },
+  { icon: Users, label: 'Team', badge: null, href: '#' },
 ]
 
 export function AppSidebar() {
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
       <SidebarHeader className="p-4">
-        <div className="flex items-center gap-3">
+        <Link href="/dashboard" className="flex items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
             <span className="text-sm font-bold text-primary-foreground">TF</span>
           </div>
@@ -54,7 +57,7 @@ export function AppSidebar() {
             <span className="text-sm font-semibold tracking-tight">TaskFlow</span>
             <span className="text-xs text-muted-foreground">Pro Workspace</span>
           </div>
-        </div>
+        </Link>
       </SidebarHeader>
 
       <SidebarContent>
@@ -64,20 +67,23 @@ export function AppSidebar() {
               {mainNavItems.map((item) => (
                 <SidebarMenuItem key={item.label}>
                   <SidebarMenuButton
+                    asChild
                     isActive={item.label === 'My Tasks'}
                     tooltip={item.label}
                     className="relative"
                   >
-                    <item.icon className="size-4" />
-                    <span>{item.label}</span>
-                    {item.badge && (
-                      <Badge
-                        variant="secondary"
-                        className="ml-auto h-5 min-w-5 justify-center rounded-full bg-primary/10 text-primary group-data-[collapsible=icon]:hidden"
-                      >
-                        {item.badge}
-                      </Badge>
-                    )}
+                    <Link href={item.href}>
+                      <item.icon className="size-4" />
+                      <span>{item.label}</span>
+                      {item.badge && (
+                        <Badge
+                          variant="secondary"
+                          className="ml-auto h-5 min-w-5 justify-center rounded-full bg-primary/10 text-primary group-data-[collapsible=icon]:hidden"
+                        >
+                          {item.badge}
+                        </Badge>
+                      )}
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
